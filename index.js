@@ -47,3 +47,5 @@ client.on(Events.InteractionCreate, async interaction =>{
         await interaction.reply("An error has occurred")
     }
 })
+
+// random message reactions
