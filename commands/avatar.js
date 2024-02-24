@@ -12,7 +12,9 @@ module.exports = {
 
     async execute(interaction) {
         const user = interaction.options.getUser('usuário') || interaction.user;
-        const avatar = user.displayAvatarURL({ dynamic: true, format: 'png', size: 1024 });
-        await interaction.reply(`${user.username}'s avatar: ${avatar}`);
+        const avatar = user.displayAvatarURL({ dynamic: true, format: 'png', size: 256 });
+        await interaction.reply({ files: [avatar] });
+
+        //await interaction.reply(`${user.username}'s avatar: ${avatar}`);
     }
 }
