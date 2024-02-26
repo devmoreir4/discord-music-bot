@@ -14,6 +14,5 @@ module.exports = {
         const user = interaction.options.getUser('usuário') || interaction.user;
         const avatar = user.displayAvatarURL({ dynamic: true, format: 'png', size: 256 });
         await interaction.reply({ files: [avatar], ephemeral: true });
-        //await interaction.reply(`${user.username}'s avatar: ${avatar}`);
     }
 }

@@ -11,7 +11,7 @@ const exampleEmbed = new EmbedBuilder()
         { name: '/pause', value: 'Em construção.', inline: true },
         { name: '/stop', value: 'Em construção.', inline: true },
         { name: '/joke', value: 'Em construção.', inline: true },
-        { name: '/voting [pergunta] [op1] [op2]', value: 'Em construção.', inline: true },
+        { name: '/vote [pergunta] [op1] [op2]', value: 'Em construção.', inline: true },
         { name: '/news', value: 'Em construção.', inline: true },
         { name: '/weather', value: 'Em construção.', inline: true },
         { name: '/clear [qtde]', value: 'Deleta mensagens do chat.', inline: true }

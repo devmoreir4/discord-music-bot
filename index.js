@@ -12,6 +12,7 @@ dotenv.config()
 const { TOKEN } = process.env
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] })
+
 client.commands = new Collection()
 
 for (const file of commandFiles){
@@ -27,6 +28,14 @@ for (const file of commandFiles){
 // bot login
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`)
+});
+
+client.on(Events.GuildCreate, guild => {
+    const channel = guild.systemChannel; // canal de texto padrao
+
+    if (channel && channel.permissionsFor(guild.me).has('SEND_MESSAGES')) {
+        channel.send(`Olá! Eu sou XablauBOT e cheguei pra somar! /help para ver os comandos!`);
+    }
 });
 
 client.login(TOKEN)
