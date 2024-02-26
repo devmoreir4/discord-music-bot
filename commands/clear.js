@@ -12,6 +12,14 @@ module.exports = {
     async execute(interaction) {
         if (!interaction.inCachedGuild() || !interaction.isCommand()) return;
 
+        /* 
+        const requiredRoleId = 'ID_DO_CARGO'; // id do cargo que pode usar o comando
+
+        if (!interaction.member.roles.cache.has(requiredRoleId)) {
+            return interaction.reply('Você permissão para usar este comando.');
+        }
+        */
+
         const amount = interaction.options.getInteger('quantidade');
         
         if (amount <= 0 || amount > 100) {
