@@ -6,19 +6,17 @@ module.exports = {
         .setDescription("Deleta mensagens do chat.")
         .addIntegerOption(option =>
             option.setName('quantidade')
-                .setDescription('O total de mensagens a serem deletadas')
+                .setDescription('O total de mensagens a serem deletadas.')
                 .setRequired(true)),
 
     async execute(interaction) {
         if (!interaction.inCachedGuild() || !interaction.isCommand()) return;
 
-        /* 
-        const requiredRoleId = 'ID_DO_CARGO'; // id do cargo que pode usar o comando
+        const requiredRoleName = 'admin'; // nome do cargo
 
-        if (!interaction.member.roles.cache.has(requiredRoleId)) {
-            return interaction.reply('Você permissão para usar este comando.');
+        if (!interaction.member.roles.cache.some(role => role.name === requiredRoleName)) {
+            return interaction.reply('Você não tem permissão para usar este comando.');
         }
-        */
 
         const amount = interaction.options.getInteger('quantidade');
         

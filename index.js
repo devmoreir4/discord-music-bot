@@ -31,21 +31,21 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on(Events.GuildCreate, guild => {
-    const channel = guild.systemChannel; // canal de texto padrao
+    const channel = guild.systemChannel; // canal de texto padrão
 
-    if (channel && channel.permissionsFor(guild.me).has('SEND_MESSAGES')) {
-        channel.send(`Olá! Eu sou XablauBOT e cheguei pra somar! /help para ver os comandos!`);
+    if (channel && channel.permissionsFor(guild.me)?.has('SEND_MESSAGES')) {
+        channel.send(`Olá! Eu sou XablauBOT! Use /help para ver os comandos!`);
+    } else {
+        console.log(`Não foi possível encontrar o canal padrão para enviar a mensagem de boas-vindas.`);
     }
 });
 
-client.login(TOKEN)
-
-// Listener de interações
+// interações
 client.on(Events.InteractionCreate, async interaction =>{
     if (!interaction.isChatInputCommand()) return
     const command = interaction.client.commands.get(interaction.commandName)
     if (!command) {
-        console.error("Command not found")
+        console.error("Command not found.")
         return
     }
     try {
@@ -53,8 +53,17 @@ client.on(Events.InteractionCreate, async interaction =>{
     } 
     catch (error) {
         console.error(error)
-        await interaction.reply("An error has occurred")
+        await interaction.reply("Ocorreu um erro.")
     }
 })
 
-// random message reactions
+client.on(Events.GuildMemberAdd, member => {
+    const guild = member.guild;
+    const channel = guild.systemChannel;
+
+    if (channel && channel.permissionsFor(guild.me)?.has('SEND_MESSAGES')) {
+        channel.send(`Bem-vindo(a), ${member}! Espero que se sinta em casa!`);
+    }
+});
+
+client.login(TOKEN)
