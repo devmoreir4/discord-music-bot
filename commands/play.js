@@ -1,10 +1,15 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { joinVoiceChannel, getVoiceConnection } = require('@discordjs/voice');
+const { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource } = require('@discordjs/voice');
+const ytdl = require('ytdl-core');
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('play')
-        .setDescription('Cria e gerencia uma conexão de voz no servidor.'),
+        .setDescription('Reproduz uma música a partir de um link do YouTube.')
+        .addStringOption(option =>
+            option.setName('link')
+                .setDescription('O link da música no YouTube.')
+                .setRequired(true)),
 
     async execute(interaction) {
         const channel = interaction.member.voice.channel;
@@ -13,25 +18,36 @@ module.exports = {
             return interaction.reply('Você precisa estar em um canal de voz para usar este comando!');
         }
 
+        const link = interaction.options.getString('link');
+
+        if (!ytdl.validateURL(link)) {
+            return interaction.reply({ content: 'Link inválido!', ephemeral: true });
+        }
+
         try {
-            // Verifica se já existe uma conexão de voz no servidor
             const existingConnection = getVoiceConnection(channel.guild.id);
             if (existingConnection) {
                 return interaction.reply('Já existe uma conexão de voz neste servidor!');
             }
 
-            // Cria a conexão de voz
             const connection = joinVoiceChannel({
                 channelId: channel.id,
                 guildId: channel.guild.id,
                 adapterCreator: channel.guild.voiceAdapterCreator,
             });
 
-            // Responde ao usuário que a conexão foi criada com sucesso
-            await interaction.reply('Conexão de voz criada com sucesso!');
+            const player = createAudioPlayer();
+
+            const resource = createAudioResource(ytdl(link, { filter: 'audioonly' })); // recurso de áudio
+
+            player.play(resource);
+
+            connection.subscribe(player);
+
+            await interaction.reply(`Tocando música de ${link}`);
         } catch (error) {
             console.error('Erro ao criar a conexão de voz:', error);
-            await interaction.reply('Houve um erro ao criar a conexão de voz.');
+            await interaction.reply('Houve um erro ao reproduzir a música.');
         }
     },
 };

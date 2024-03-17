@@ -1,5 +1,5 @@
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js')
-
+const { Client, Events, GatewayIntentBits, Collection } = require('discord.js') //Intents
+//https://www.youtube.com/watch?v=OEdFpzuskNI
 // import comands
 const fs = require("node:fs")
 const path = require("node:path")
@@ -11,7 +11,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 const { TOKEN } = process.env
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] })
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
 
 client.commands = new Collection()
 
@@ -22,7 +22,7 @@ for (const file of commandFiles){
         client.commands.set(command.data.name, command)
     } else  {
         console.log(`This command ${filePath} is missing "data" or "execute"`)
-    } 
+    }
 }
 
 // bot login

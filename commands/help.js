@@ -10,12 +10,12 @@ const exampleEmbed = new EmbedBuilder()
         { name: '/help', value: 'Exibe a lista de comandos disponíveis.', inline: true },
         { name: '/avatar [user]', value: 'Exibe o avatar do usuário mencionado.', inline: true },
         { name: '/ping', value: 'Verifica a latência do bot.', inline: true },
+        { name: '/clear [amount]', value: 'Deleta mensagens do chat.', inline: true },
         { name: '/play [link]', value: 'Em construção.', inline: true },
         { name: '/pause', value: 'Em construção.', inline: true },
         { name: '/stop', value: 'Em construção.', inline: true },
-        { name: '/poll [question] [option1] [option2]', value: 'Em construção.', inline: true },
         { name: '/news', value: 'Em construção.', inline: true },
-        { name: '/clear [amount]', value: 'Deleta mensagens do chat.', inline: true }
+        { name: '/poll [question] [option1] [option2]', value: 'Em construção.', inline: true }
     )
     .setTimestamp()
     .setFooter({ text: 'Made by @devmoreir4'}); // iconURL: '#'
