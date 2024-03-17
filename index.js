@@ -1,5 +1,6 @@
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js') //Intents
-//https://www.youtube.com/watch?v=OEdFpzuskNI
+const { Client, Events, GatewayIntentBits, Collection } = require('discord.js')
+const { VoiceConnectionManager } = require('@discordjs/voice');
+
 // import comands
 const fs = require("node:fs")
 const path = require("node:path")

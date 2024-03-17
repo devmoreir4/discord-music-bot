@@ -11,7 +11,7 @@ const exampleEmbed = new EmbedBuilder()
         { name: '/avatar [user]', value: 'Exibe o avatar do usuário mencionado.', inline: true },
         { name: '/ping', value: 'Verifica a latência do bot.', inline: true },
         { name: '/clear [amount]', value: 'Deleta mensagens do chat.', inline: true },
-        { name: '/play [link]', value: 'Em construção.', inline: true },
+        { name: '/play [link]', value: 'Reproduz uma música a partir de um link do YouTube.', inline: true },
         { name: '/pause', value: 'Em construção.', inline: true },
         { name: '/stop', value: 'Em construção.', inline: true },
         { name: '/news', value: 'Em construção.', inline: true },
