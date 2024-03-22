@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource } = require('@discordjs/voice');
 
 module.exports = {
@@ -16,7 +16,11 @@ module.exports = {
 
         try {
             connection.destroy();
-            interaction.reply('Parando a reprodução de música e desconectando do canal de voz.');
+            const embed = new EmbedBuilder()
+                .setColor('#D2691E')
+                .setDescription('Finalizando a reprodução de música e desconectando.');
+
+            interaction.reply({ embeds: [embed] });
         } catch (error) {
             console.error('Erro ao parar a reprodução de música:', error);
             interaction.reply('Houve um erro ao parar a reprodução de música.');

@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { joinVoiceChannel, getVoiceConnection, createAudioPlayer, createAudioResource } = require('@discordjs/voice');
 const ytdl = require('ytdl-core');
 
@@ -45,7 +45,12 @@ module.exports = {
 
             connection.subscribe(player);
 
-            await interaction.reply(`Tocando música de ${link}`); // ${info.videoDetails.title}
+            const embed = new EmbedBuilder()
+                .setColor('#D2691E')
+                .setDescription(`Tocando **${info.videoDetails.title}** - ${link}`);
+                
+            await interaction.reply({ embeds: [embed] });
+            //await interaction.reply(`Tocando música de ${link}`); // ${info.videoDetails.title}
         } catch (error) {
             console.error('Erro ao criar a conexão de voz:', error);
             await interaction.reply('Houve um erro ao reproduzir a música.');

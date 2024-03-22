@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder, MessageEmbed } = require("discord.js")
 
 const exampleEmbed = new EmbedBuilder()
-	.setColor("#006400")
+	.setColor("#D2691E")
 	.setTitle("Comandos XablauBOT")
     .setDescription('Lista de comandos disponíveis do XablauBOT')
     .setAuthor({ name: 'XablauBOT', iconURL: 'https://media.discordapp.net/ephemeral-attachments/1192665515978657824/1218638896867446885/3d40d2c6ab81847eebcb3021ba0d3803.webp?ex=660864ea&is=65f5efea&hm=1c395687f78fa299a063661c718b7fea4780426703b245374ff8b71c40986a33&=&format=webp' })
