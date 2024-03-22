@@ -50,7 +50,6 @@ module.exports = {
                 .setDescription(`Tocando **${info.videoDetails.title}** - ${link}`);
                 
             await interaction.reply({ embeds: [embed] });
-            //await interaction.reply(`Tocando música de ${link}`); // ${info.videoDetails.title}
         } catch (error) {
             console.error('Erro ao criar a conexão de voz:', error);
             await interaction.reply('Houve um erro ao reproduzir a música.');
