@@ -1,4 +1,4 @@
-const { Client, Events, GatewayIntentBits, Collection } = require('discord.js')
+const { Client, Events, GatewayIntentBits, Collection, ActivityType } = require('discord.js')
 const { VoiceConnectionManager } = require('@discordjs/voice');
 
 // import comands
@@ -29,6 +29,7 @@ for (const file of commandFiles){
 // bot login
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`)
+    client.user.setPresence({ activities: [{ name: '/help' }], status: 'online' });
 });
 
 client.on(Events.GuildCreate, guild => {

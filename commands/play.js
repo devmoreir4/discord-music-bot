@@ -38,13 +38,14 @@ module.exports = {
 
             const player = createAudioPlayer();
 
+            const info = await ytdl.getInfo(link);
             const resource = createAudioResource(ytdl(link, { filter: 'audioonly' })); // recurso de áudio
 
             player.play(resource);
 
             connection.subscribe(player);
 
-            await interaction.reply(`Tocando música de ${link}`);
+            await interaction.reply(`Tocando música de ${link}`); // ${info.videoDetails.title}
         } catch (error) {
             console.error('Erro ao criar a conexão de voz:', error);
             await interaction.reply('Houve um erro ao reproduzir a música.');
