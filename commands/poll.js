@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -23,7 +23,7 @@ module.exports = {
         const op2 = interaction.options.getString('op2');
 
         const embed = {
-            color: 0x0099ff,
+            color: 0xD2691E,
             title: 'Enquete',
             description: question,
             fields: [
@@ -54,9 +54,15 @@ module.exports = {
         });
 
         collector.on('end', collected => {
-            interaction.followUp(`Votos encerrados! Resultados da enquete "${question}":
-            Opção 1 (${op1}): ${votes['1️⃣']} votos
-            Opção 2 (${op2}): ${votes['2️⃣']} votos`);
+            const embed = new EmbedBuilder()
+                .setColor('#D2691E')
+                .setTitle('Votação Encerrada')
+                .setDescription(`Resultados da enquete "${question}":`)
+                .addFields(
+                    { name: `Opção 1:`, value: `${votes['1️⃣']} votos`, inline: true },
+                    { name: `Opção 2:`, value: `${votes['2️⃣']} votos`, inline: true }
+                );
+            interaction.followUp({ embeds: [embed] });
         });
     }
 };
