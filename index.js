@@ -12,7 +12,10 @@ const dotenv = require('dotenv')
 dotenv.config()
 const { TOKEN } = process.env
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, 
+    GatewayIntentBits.GuildVoiceStates, 
+    GatewayIntentBits.GuildMessages, 
+    GatewayIntentBits.MessageContent] });
 
 client.commands = new Collection()
 
@@ -37,19 +40,20 @@ client.on(Events.GuildCreate, guild => {
 
     if (channel && channel.permissionsFor(guild.me)?.has('SEND_MESSAGES')) {
         channel.send(`Olá! Eu sou XablauBOT! Use /help para ver os comandos!`);
-    } else {
-        console.log(`Não foi possível encontrar o canal padrão para enviar a mensagem de boas-vindas.`);
     }
 });
 
 // interações
 client.on(Events.InteractionCreate, async interaction =>{
     if (!interaction.isChatInputCommand()) return
+
     const command = interaction.client.commands.get(interaction.commandName)
+
     if (!command) {
         console.error("Command not found.")
         return
     }
+
     try {
         await command.execute(interaction)
     } 

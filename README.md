@@ -19,7 +19,6 @@ GUILD_ID = YOUR_GUILD_ID
 
 # run the command
 node index.js
-
 ```
 
 Go to the [developer portal](https://discord.com/developers/applications/) and get your tokens and invite the bot to your server.

@@ -13,8 +13,9 @@ const exampleEmbed = new EmbedBuilder()
         { name: '/clear [amount]', value: 'Deleta mensagens do chat.', inline: true },
         { name: '/play [link]', value: 'Reproduz uma música a partir de um link do YouTube.', inline: true },
         { name: '/pause', value: 'Em construção.', inline: true },
+        { name: '/resume', value: 'Em construção.', inline: true },
         { name: '/stop', value: 'Finaliza a reprodução de uma música.', inline: true },
-        { name: '/poll [question] [option1] [option2]', value: 'Em construção.', inline: true }
+        { name: '/poll [question] [option1] [option2]', value: 'Inicia uma enquete.', inline: true }
     )
     .setTimestamp()
     .setFooter({ text: 'Made by @devmoreir4'}); // iconURL: '#'
