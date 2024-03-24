@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -38,31 +38,36 @@ module.exports = {
         await pollMessage.react('1️⃣');
         await pollMessage.react('2️⃣');
 
-        const filter = (reaction, user) => {
-            return ['1️⃣', '2️⃣'].includes(reaction.emoji.name) && !user.bot;
-        };
+        setTimeout(async () => {
+            const updatedPollMessage = await pollMessage.fetch();
+            const reactions = updatedPollMessage.reactions.cache;
 
-        const collector = pollMessage.createReactionCollector({ filter, time: 60000 });
+            let countOption1 = 0;
+            let countOption2 = 0;
 
-        let votes = {
-            '1️⃣': 0,
-            '2️⃣': 0
-        };
+            if (reactions.has('1️⃣')) {
+                countOption1 = reactions.get('1️⃣').count - 1;
+            }
+            if (reactions.has('2️⃣')) {
+                countOption2 = reactions.get('2️⃣').count - 1;
+            }
 
-        collector.on('collect', (reaction, user) => {
-            votes[reaction.emoji.name]++;
-        });
+            let winner;
+            if (countOption1 > countOption2) {
+                winner = `${op1} (${countOption1} votos)`;
+            } else if (countOption1 < countOption2) {
+                winner = `${op2} (${countOption2} votos)`;
+            } else {
+                winner = 'Empate';
+            }
 
-        collector.on('end', collected => {
-            const embed = new EmbedBuilder()
-                .setColor('#D2691E')
-                .setTitle('Votação Encerrada')
-                .setDescription(`Resultados da enquete "${question}":`)
-                .addFields(
-                    { name: `Opção 1:`, value: `${votes['1️⃣']} votos`, inline: true },
-                    { name: `Opção 2:`, value: `${votes['2️⃣']} votos`, inline: true }
-                );
-            interaction.followUp({ embeds: [embed] });
-        });
+            const resultEmbed = {
+                color: 0xD2691E,
+                title: 'Resultado da Enquete',
+                description: `**Opção 1:** ${op1}\n**Opção 2:** ${op2}\n\n**Vencedor:** ${winner}`
+            };
+
+            interaction.editReply({ embeds: [resultEmbed] }).catch(console.error);
+        }, 10000);
     }
 };
