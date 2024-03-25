@@ -11,7 +11,7 @@ module.exports = {
         const connection = getVoiceConnection(guildId);
 
         if (!connection) {
-            return interaction.reply('Não estou conectado a nenhum canal de voz neste servidor.');
+            return interaction.reply('Não há nenhuma conexão de voz ativa neste servidor.');
         }
 
         try {

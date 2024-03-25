@@ -3,7 +3,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("poll")
-        .setDescription("Cria uma enquete.")
+        .setDescription("Inicia uma enquete.")
         .addStringOption(option =>
             option.setName('question')
                 .setDescription('A pergunta da enquete')

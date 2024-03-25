@@ -22,6 +22,10 @@ module.exports = {
 
         player.unpause();
 
-        await interaction.reply('A música foi retomada.');
+        const embed = new EmbedBuilder()
+            .setColor('#D2691E')
+            .setDescription('Música retomada.');
+
+        await interaction.reply({ embeds: [embed] });
     },
 };
