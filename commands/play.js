@@ -15,7 +15,7 @@ module.exports = {
         const channel = interaction.member.voice.channel;
 
         if (!channel) {
-            return interaction.reply('Você precisa estar em um canal de voz para usar este comando!');
+            return interaction.reply('Você precisa estar em um canal de voz para usar este comando.');
         }
 
         const link = interaction.options.getString('link');
@@ -27,7 +27,7 @@ module.exports = {
         try {
             const existingConnection = getVoiceConnection(channel.guild.id);
             if (existingConnection) {
-                return interaction.reply('Já existe uma conexão de voz neste servidor!');
+                return interaction.reply('Já existe uma conexão de voz neste servidor.');
             }
 
             const connection = joinVoiceChannel({
@@ -47,7 +47,7 @@ module.exports = {
 
             const embed = new EmbedBuilder()
                 .setColor('#D2691E')
-                .setDescription(`Tocando **${info.videoDetails.title}** - ${link}`);
+                .setDescription(`Tocando **${info.videoDetails.title}**\n${link}`);
                 
             await interaction.reply({ embeds: [embed] });
         } catch (error) {

@@ -4,7 +4,7 @@ const exampleEmbed = new EmbedBuilder()
 	.setColor("#D2691E")
 	.setTitle("Comandos XablauBOT")
     .setDescription('Lista de comandos disponíveis do XablauBOT')
-    .setAuthor({ name: 'XablauBOT', iconURL: 'https://media.discordapp.net/ephemeral-attachments/1192665515978657824/1218638896867446885/3d40d2c6ab81847eebcb3021ba0d3803.webp?ex=660864ea&is=65f5efea&hm=1c395687f78fa299a063661c718b7fea4780426703b245374ff8b71c40986a33&=&format=webp' })
+    .setAuthor({ name: 'XablauBOT', iconURL: 'https://cdn.discordapp.com/ephemeral-attachments/1192665515978657824/1223359799736008764/d368784750c1d7efc28d76871215bc86.webp?ex=66199199&is=66071c99&hm=a784fe10433ccbafd1a080c6633aea7a206af5a4e3b7d65e468271d6586e1d81&' })
     .setThumbnail('https://cdn.pixabay.com/photo/2017/07/24/04/23/technical-support-2533526_1280.png')
 	.addFields(
         { name: '/help', value: 'Exibe a lista de comandos disponíveis.', inline: true },
@@ -17,7 +17,6 @@ const exampleEmbed = new EmbedBuilder()
         { name: '/stop', value: 'Finaliza a reprodução de uma música.', inline: true },
         { name: '/poll [question] [option1] [option2]', value: 'Inicia uma enquete.', inline: true },
         { name: '/volume', value: 'under construction.', inline: true },
-        { name: '/news', value: 'under construction.', inline: true },
         { name: '/weather', value: 'under construction.', inline: true }
     )
     .setTimestamp()

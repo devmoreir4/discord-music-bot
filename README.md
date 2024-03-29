@@ -17,7 +17,8 @@ TOKEN = YOUR_TOKEN
 CLIENT_ID = YOUR_CLIENT_ID
 GUILD_ID = YOUR_GUILD_ID
 
-# run the command
+# run the commands
+node deploy.js
 node index.js
 ```
 

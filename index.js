@@ -1,14 +1,10 @@
 const { Client, Events, GatewayIntentBits, Collection, ActivityType } = require('discord.js')
 const { VoiceConnectionManager } = require('@discordjs/voice');
-
-// import comands
 const fs = require("node:fs")
 const path = require("node:path")
-const commandsPath = path.join(__dirname, "commands")
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"))
+const dotenv = require('dotenv')
 
 // dotenv
-const dotenv = require('dotenv')
 dotenv.config()
 const { TOKEN } = process.env
 
@@ -18,6 +14,25 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.MessageContent] });
 
 client.commands = new Collection()
+
+// avatar bot
+const avatarPath = './assets/xablau_bot.png';
+
+if (fs.existsSync(avatarPath)) {
+    client.once(Events.ClientReady, async () => {
+        try {
+            await client.user.setAvatar(avatarPath);
+        } catch (error) {
+            console.error('Error setting avatar:', error);
+        }
+    });
+} else {
+    console.error('Avatar file not found.');
+}
+
+// import comands
+const commandsPath = path.join(__dirname, "commands")
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith(".js"))
 
 for (const file of commandFiles){
     const filePath = path.join(commandsPath, file)
@@ -32,18 +47,19 @@ for (const file of commandFiles){
 // bot login
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`)
-    client.user.setPresence({ activities: [{ name: '/help' }], status: 'online' });
+    client.user.setPresence({ activities: [{ name: '/help' }], status: 'online', afk: false, 
+     description: "I'm a versatile bot, but I really like listening to music with my friends..." });
 });
 
 client.on(Events.GuildCreate, guild => {
-    const channel = guild.systemChannel; // canal de texto padrão
+    const channel = guild.systemChannel; // default channel
 
     if (channel && channel.permissionsFor(guild.me)?.has('SEND_MESSAGES')) {
         channel.send(`Olá! Eu sou XablauBOT! Use /help para ver os comandos!`);
     }
 });
 
-// interações
+// interactions
 client.on(Events.InteractionCreate, async interaction =>{
     if (!interaction.isChatInputCommand()) return
 
