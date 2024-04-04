@@ -1,6 +1,6 @@
 # Discord Music bot
 
-A simple discord bot with features to play music from a link and also manage messages.
+A discord bot developed in node.js with features to play music from a link and also manage messages.
 
 ## How to use
 
