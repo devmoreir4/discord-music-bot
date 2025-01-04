@@ -15,10 +15,10 @@ export function loadCommands(commandsDir: string): Collection<string, Command> {
   const commands = new Collection<string, Command>();
   const files = fs.readdirSync(commandsDir).filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
 
-  for (const file of files) {
-    const command = require(path.join(commandsDir, file)) as Command;
+  files.forEach(async (file) => {
+    const command = await import(path.join(commandsDir, file));
     commands.set(command.name, command);
-  }
+  });
 
   return commands;
 }
