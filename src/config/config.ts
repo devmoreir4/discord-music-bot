@@ -3,7 +3,7 @@ import path from "path";
 import fs from "fs";
 
 export async function initializeBot(client: Client) {
-  const avatarPath = path.join(__dirname, "./assets/avatar.png");
+  const avatarPath = path.join(__dirname, "../assets/avatar.png");
 
   // avatar
   if (fs.existsSync(avatarPath)) {
