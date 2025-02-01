@@ -1,5 +1,5 @@
-import { Command } from "../utils/commandLoader";
-import { subscriptions } from "../utils/musicManager";
+import { Command } from "../../utils/commandLoader";
+import { subscriptions } from "../../utils/musicManager";
 
 const stop: Command = {
   name: "stop",

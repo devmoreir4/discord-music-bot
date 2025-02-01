@@ -5,20 +5,25 @@ import { Collection } from "discord.js";
 export interface Command {
   name: string;
   description?: string;
-  execute: (args: {
-    message: any;
-    args: string[];
-  }) => void | Promise<void>;
+  execute: (args: { message: any; args: string[] }) => void | Promise<void>;
 }
 
 export function loadCommands(commandsDir: string): Collection<string, Command> {
   const commands = new Collection<string, Command>();
-  const files = fs.readdirSync(commandsDir).filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
 
-  files.forEach(async (file) => {
-    const command = await import(path.join(commandsDir, file));
-    commands.set(command.name, command);
-  });
+  const readCommands = (dir: string) => {
+    const files = fs.readdirSync(dir);
+    for (const file of files) {
+      const absolutePath = path.join(dir, file);
+      if (fs.statSync(absolutePath).isDirectory()) {
+        readCommands(absolutePath);
+      } else if (file.endsWith(".ts") || file.endsWith(".js")) {
+        const command = require(absolutePath) as Command;
+        commands.set(command.name, command);
+      }
+    }
+  };
 
+  readCommands(commandsDir);
   return commands;
 }

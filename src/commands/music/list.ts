@@ -1,9 +1,9 @@
-import { Command } from "../utils/commandLoader";
+import { Command } from "../../utils/commandLoader";
 import path from "path";
 import fs from "fs";
 import { EmbedBuilder } from "discord.js";
 
-const MUSIC_DIR = path.join(__dirname, "../../musics");
+const MUSIC_DIR = path.join(__dirname, "../../../musics");
 const ALLOWED_EXTENSIONS = [".mp3", ".webm", ".wav", ".ogg", ".flac", ".aac"];
 
 const list: Command = {

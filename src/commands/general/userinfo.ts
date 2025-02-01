@@ -1,4 +1,4 @@
-import { Command } from "../utils/commandLoader";
+import { Command } from "../../utils/commandLoader";
 import { EmbedBuilder } from "discord.js";
 
 const userinfo: Command = {

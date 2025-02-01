@@ -1,4 +1,4 @@
-import { Command } from "../utils/commandLoader";
+import { Command } from "../../utils/commandLoader";
 
 const uptime: Command = {
   name: "uptime",

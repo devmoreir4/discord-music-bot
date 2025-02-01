@@ -1,9 +1,9 @@
-import { Command } from "../utils/commandLoader";
-import { joinChannel } from "../utils/musicManager";
+import { Command } from "../../utils/commandLoader";
+import { joinChannel } from "../../utils/musicManager";
 import path from "path";
 import fs from "fs";
 
-const MUSIC_DIR = path.join(__dirname, "../../musics");
+const MUSIC_DIR = path.join(__dirname, "../../../musics");
 const ALLOWED_EXTENSIONS = [".mp3", ".webm", ".wav", ".ogg", ".flac", ".aac"];
 
 const play: Command = {

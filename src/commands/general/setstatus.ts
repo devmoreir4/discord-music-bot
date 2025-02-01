@@ -1,4 +1,4 @@
-import { Command } from "../utils/commandLoader";
+import { Command } from "../../utils/commandLoader";
 import { ActivityType, Message } from "discord.js";
 
 const setstatus: Command = {
