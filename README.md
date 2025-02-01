@@ -16,7 +16,7 @@ BeatKeeper is a Discord app focused on playing music from a local library, while
 1. **Clone the Repository:**
 
 ```bash
-git clone https://github.com/devmoreir4/discord-bot.git
+git clone https://github.com/devmoreir4/BeatKeeper.git
 cd BeatKeeper
 ```
 
