@@ -9,19 +9,19 @@ export async function initializeBot(client: Client) {
   if (fs.existsSync(avatarPath)) {
     try {
       await client.user?.setAvatar(avatarPath);
-      console.log("Avatar do bot inicializado com sucesso!");
+      console.log("😎 Avatar inicializado com sucesso!");
     } catch (error) {
-      console.error("Erro ao inicializar o avatar do bot:", error);
+      console.error("❌ Erro ao inicializar o avatar:", error);
     }
   } else {
-    console.log("O arquivo de avatar não foi encontrado.");
+    console.log("⚠️ O arquivo de avatar não foi encontrado.");
   }
 
   // activity
   try {
     await client.user?.setActivity("!help", { type: ActivityType.Playing });
-    console.log("Descrição do bot inicializada com sucesso!");
+    console.log("📌 Descrição inicializada com sucesso!");
   } catch (error) {
-    console.error("Erro ao inicializar a descrição do bot:", error);
+    console.error("❌ Erro ao inicializar a descrição:", error);
   }
 }
