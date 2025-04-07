@@ -7,6 +7,8 @@
     "strict": true,
     "esModuleInterop": true,
     "noImplicitAny": false,
+    "moduleResolution": "node",
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
