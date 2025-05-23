@@ -1,15 +1,15 @@
-# 🤖 BeatKeeper Discord App
+# Discord Music App
 
 **BeatKeeper** is a Discord application focused on playing music from a local library while also offering various extra commands for server management and fun features.
 
-## ✨ Features
+## Features
 
 - **Local Music Playback:** Play music files stored locally in various formats.
 - **Queue Management:** View, add, remove, and manage the music queue.
 - **Playback Controls:** Commands for play, pause, resume, skip, stop, and volume adjustment.
 - **Extra Commands:** Additional functionalities for server administration and interactivity.
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 
@@ -42,9 +42,11 @@ DISCORD_TOKEN=your_discord_token_here
 
 Note: You can get your token from the [discord developer portal](https://discord.com/developers/applications).
 
-4. **Add Your Music Library:**
-
-Place your audio files (mp3, webm, wav, etc.) into the /musics folder.
+4. **Invite the Bot to Your Server:**
+- In the Discord Developer Portal, open your application and go to the OAuth2 section.
+- Under Scopes, select bot and add the necessary Bot Permissions.
+- Copy the generated OAuth2 URL.
+- Paste the URL into your browser, select your server, and authorize the bot.
 
 5. **Compile and Start the App:**
 
@@ -60,10 +62,6 @@ Place your audio files (mp3, webm, wav, etc.) into the /musics folder.
   npm start
   ```
 
-## 🤝 Contributing
+## License
 
-Contributions are welcome! Feel free to open issues or submit pull requests to improve the project.
-
-## 📝 License
-
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE). Contributions are welcome!
