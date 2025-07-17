@@ -1,12 +1,16 @@
 import { Command } from "../../utils/commandLoader";
-import { Message } from "discord.js";
+import { Message, EmbedBuilder } from "discord.js";
 
 const remind: Command = {
   name: "remind",
-  description: "Define um lembrete para o usuário. Uso: !remind <tempo em minutos> <mensagem>",
+  description: "Sets a reminder for the user. Usage: !remind <minutes> <message>",
   execute: async ({ message, args }: { message: Message; args: string[] }) => {
     if (args.length < 2) {
-      await message.reply("Por favor, forneça o tempo em minutos e a mensagem do lembrete. Exemplo: `!remind 10 Faça uma pausa!`");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Missing Arguments")
+        .setDescription("Please provide the time in minutes and the reminder message. Example: `!remind 10 Take a break!`");
+      await message.reply({ embeds: [embed] });
       return;
     }
 
@@ -16,16 +20,24 @@ const remind: Command = {
     const amount = parseInt(timeArg, 10);
 
     if (isNaN(amount) || amount <= 0) {
-      await message.reply("Por favor, forneça um número válido de minutos. Exemplo: `10` para 10 minutos.");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Invalid Time")
+        .setDescription("Please provide a valid number of minutes. Example: `10` for 10 minutes.");
+      await message.reply({ embeds: [embed] });
       return;
     }
 
     const milliseconds = amount * 60 * 1000;
 
-    await message.reply(`Lembrete configurado! Você será lembrado em ${amount} minuto(s).`);
+    const embed = new EmbedBuilder()
+      .setColor("#f19962")
+      .setTitle("Reminder Set")
+      .setDescription(`Reminder set! You will be reminded in ${amount} minute(s).`);
+    await message.reply({ embeds: [embed] });
 
     setTimeout(async () => {
-      await message.author.send(`Lembrete: ${reminderMessage}`);
+      await message.author.send(`Reminder: ${reminderMessage}`);
     }, milliseconds);
   },
 };

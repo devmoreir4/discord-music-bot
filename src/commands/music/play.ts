@@ -1,23 +1,36 @@
 import { Command } from "../../utils/commandLoader";
 import { joinChannel } from "../../utils/musicManager";
 import ytdl from "@distube/ytdl-core";
+import { EmbedBuilder } from "discord.js";
 
 const play: Command = {
   name: "play",
-  description: "Toca uma música do YouTube. Use: !play <URL do YouTube>",
+  description: "Plays a YouTube song. Usage: !play <YouTube URL>",
   execute: async ({ message, args }) => {
     if (!message.member?.voice.channel) {
-      return message.reply("Você precisa estar em um canal de voz para usar este comando.");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Voice Channel Required")
+        .setDescription("You need to be in a voice channel to use this command.");
+      return message.reply({ embeds: [embed] });
     }
 
     if (args.length === 0) {
-      return message.reply("Por favor, informe a URL do YouTube da música que deseja tocar.");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Missing URL")
+        .setDescription("Please provide the YouTube URL of the song you want to play.");
+      return message.reply({ embeds: [embed] });
     }
 
     const url = args[0];
 
     if (!ytdl.validateURL(url)) {
-      return message.reply("Por favor, forneça uma URL válida do YouTube.");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Invalid URL")
+        .setDescription("Please provide a valid YouTube URL.");
+      return message.reply({ embeds: [embed] });
     }
 
     try {
@@ -26,10 +39,18 @@ const play: Command = {
 
       const subscription = await joinChannel(message.member);
       subscription.enqueue({ title, url });
-      message.reply(`🎵 **${title}** foi adicionada à fila!`);
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Song Added to Queue")
+        .setDescription(`🎵 **${title}** has been added to the queue!`);
+      message.reply({ embeds: [embed] });
     } catch (error) {
-      console.error("Erro ao processar URL do YouTube:", error);
-      message.reply("Erro ao processar a URL do YouTube. Verifique se o link é válido.");
+      console.error("Error processing YouTube URL:", error);
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Error")
+        .setDescription("Error processing the YouTube URL. Please check if the link is valid.");
+      message.reply({ embeds: [embed] });
     }
   },
 };

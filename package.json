@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "devmoreir4",
   "license": "ISC",
-  "description": "VibeBot is a multipurpose discord music bot written in TypeScript.",
+  "description": "CapyVibes is a multipurpose discord music bot written in TypeScript.",
   "dependencies": {
     "@discordjs/opus": "^0.10.0",
     "@discordjs/voice": "^0.18.0",

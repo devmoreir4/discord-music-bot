@@ -3,46 +3,58 @@ import { EmbedBuilder } from "discord.js";
 
 const userinfo: Command = {
   name: "userinfo",
-  description: "Mostra informações sobre um usuário específico. Uso: !userinfo @Usuario",
+  description: "Shows information about a specific user. Usage: !userinfo @User",
   execute: async ({ message, args }) => {
     const requiredRoleName = "admin";
     const memberRoles = message.member?.roles.cache;
 
     if (!memberRoles || !memberRoles.some(role => role.name === requiredRoleName)) {
-      await message.reply("Você não tem permissão para usar este comando.");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Permission Denied")
+        .setDescription("You do not have permission to use this command.");
+      await message.reply({ embeds: [embed] });
       return;
     }
 
     const userMention = message.mentions.users.first();
 
     if (!userMention) {
-      await message.reply("Por favor, mencione um usuário válido. Uso: `!userinfo @Usuario`");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Missing User")
+        .setDescription("Please mention a valid user. Usage: `!userinfo @User`");
+      await message.reply({ embeds: [embed] });
       return;
     }
 
     const member = message.guild?.members.cache.get(userMention.id);
 
     if (!member) {
-      await message.reply("Não foi possível encontrar informações sobre este usuário.");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("User Not Found")
+        .setDescription("Could not find information about this user.");
+      await message.reply({ embeds: [embed] });
       return;
     }
 
     const roles = member.roles.cache
       .filter(role => role.name !== "@everyone")
       .map(role => role.name)
-      .join(", ") || "Nenhuma";
+      .join(", ") || "None";
 
     const embed = new EmbedBuilder()
-      .setColor("#D2691E")
-      .setTitle(`Informações sobre ${userMention.tag}`)
+      .setColor("#f19962")
+      .setTitle(`User Info: ${userMention.tag}`)
       .setThumbnail(userMention.displayAvatarURL({ dynamic: true }))
       .addFields(
-        { name: "Nome de Usuário", value: userMention.tag, inline: true },
-        { name: "ID do Usuário", value: userMention.id, inline: true },
-        { name: "Entrou no Servidor", value: `<t:${Math.floor(member.joinedTimestamp! / 1000)}:F>`, inline: false },
-        { name: "Cargos", value: roles, inline: false }
+        { name: "Username", value: userMention.tag, inline: true },
+        { name: "User ID", value: userMention.id, inline: true },
+        { name: "Joined Server", value: `<t:${Math.floor(member.joinedTimestamp! / 1000)}:F>`, inline: false },
+        { name: "Roles", value: roles, inline: false }
       )
-      .setFooter({ text: `Solicitado por ${message.author.tag}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
+      .setFooter({ text: `Requested by ${message.author.tag}`, iconURL: message.author.displayAvatarURL({ dynamic: true }) })
       .setTimestamp();
 
     await message.channel.send({ embeds: [embed] });

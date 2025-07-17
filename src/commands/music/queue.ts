@@ -4,22 +4,22 @@ import { EmbedBuilder } from "discord.js";
 
 const queue: Command = {
   name: "queue",
-  description: "Lista as músicas na fila atual.",
+  description: "Lists the songs in the current queue.",
   execute: async ({ message }) => {
     const subscription = subscriptions.get(message.guildId!);
 
     if (!subscription) {
-      return message.reply("Não há nenhuma sessão de música ativa no momento.");
+      return message.reply("There is no active music session at the moment.");
     }
 
     if (subscription.queue.length === 0) {
-      return message.reply("A fila está vazia.");
+      return message.reply("The queue is empty.");
     }
 
     const embed = new EmbedBuilder()
-      .setColor("#D2691E")
-      .setTitle("🎵 Fila de Músicas")
-      .setDescription(`**${subscription.queue.length}** música(s) na fila:`);
+      .setColor("#f19962")
+      .setTitle("🎵 Music Queue")
+      .setDescription(`**${subscription.queue.length}** song(s) in the queue:`);
 
     const fields = subscription.queue.map((track, index) => {
       const isPlaying = index === 0 ? "▶️ " : "";

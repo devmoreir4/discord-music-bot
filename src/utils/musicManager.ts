@@ -40,7 +40,7 @@ export class MusicSubscription {
     });
 
     this.audioPlayer.on("error", error => {
-      console.error(`Erro no áudio: ${error.message}`);
+      console.error(`Audio error: ${error.message}`);
       this.queue.shift();
       if (this.queue.length > 0) {
         this.playNext();
@@ -88,7 +88,6 @@ export class MusicSubscription {
       ) {
         this.voiceConnection.destroy();
         subscriptions.delete(this.guildId);
-        // console.log(`Desconectado da guild ${this.guildId} por inatividade.`);
       }
     }, 5000);
   }
@@ -122,7 +121,7 @@ export async function joinChannel(member: GuildMember): Promise<MusicSubscriptio
   if (subscription) return subscription;
 
   if (!member.voice.channelId) {
-    throw new Error("Você precisa estar em um canal de voz!");
+    throw new Error("You need to be in a voice channel!");
   }
 
   const connection = joinVoiceChannel({
@@ -137,7 +136,7 @@ export async function joinChannel(member: GuildMember): Promise<MusicSubscriptio
     await entersState(connection, VoiceConnectionStatus.Ready, 30_000);
   } catch (error) {
     connection.destroy();
-    throw new Error("Falha ao entrar no canal de voz.");
+    throw new Error("Failed to join the voice channel.");
   }
 
   subscription = new MusicSubscription(connection, guildId);

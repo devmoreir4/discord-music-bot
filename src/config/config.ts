@@ -3,25 +3,25 @@ import path from "path";
 import fs from "fs";
 
 export async function initializeBot(client: Client) {
-  const avatarPath = path.join(__dirname, "../assets/avatar.png");
+  const avatarPath = path.join(__dirname, "../assets/capybara.png");
 
   // avatar
   if (fs.existsSync(avatarPath)) {
     try {
       await client.user?.setAvatar(avatarPath);
-      console.log("😎 Avatar inicializado com sucesso!");
+      console.log("😎 Avatar initialized successfully!");
     } catch (error) {
-      console.error("❌ Erro ao inicializar o avatar:", error);
+      console.error("❌ Error initializing avatar:", error);
     }
   } else {
-    console.log("⚠️ O arquivo de avatar não foi encontrado.");
+    console.log("⚠️ Avatar file not found.");
   }
 
   // activity
   try {
     await client.user?.setActivity("!help", { type: ActivityType.Playing });
-    console.log("📌 Descrição inicializada com sucesso!");
+    console.log("📌 Initial description set successfully!");
   } catch (error) {
-    console.error("❌ Erro ao inicializar a descrição:", error);
+    console.error("❌ Error setting initial description:", error);
   }
 }

@@ -13,7 +13,7 @@ export function onMessageCreate(message: Message, prefix: string, commands: Map<
       command.execute({ message, args });
     } catch (error) {
       console.error(error);
-      message.reply("Ocorreu um erro ao executar este comando.");
+      message.reply("An error occurred while executing this command.");
     }
   }
 }

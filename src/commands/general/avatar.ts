@@ -1,18 +1,27 @@
 import { Command } from "../../utils/commandLoader";
+import { EmbedBuilder } from "discord.js";
 
 const avatar: Command = {
   name: "avatar",
-  description: "Exibe o avatar do usuário mencionado. Uso: !avatar @usuário",
+  description: "Shows the mentioned user's avatar. Usage: !avatar @user",
   execute: async ({ message, args }) => {
     if (args.length === 0) {
-      await message.reply("Você deve mencionar um usuário. Exemplo: `!avatar @usuário`");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Missing User")
+        .setDescription("You must mention a user. Example: `!avatar @user`");
+      await message.reply({ embeds: [embed] });
       return;
     }
 
     const user = message.mentions.users.first();
 
     if (!user) {
-      await message.reply("Mencione um usuário válido. Exemplo: `!avatar @usuário`");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Invalid User")
+        .setDescription("Mention a valid user. Example: `!avatar @user`");
+      await message.reply({ embeds: [embed] });
       return;
     }
 

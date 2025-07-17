@@ -2,16 +2,24 @@ const { EmbedBuilder } = require("discord.js");
 
 module.exports = {
   name: "poll",
-  description: "Inicia uma enquete.",
+  description: "Starts a poll.",
   async execute({ message, args }) {
     if (args.length < 3) {
-      return message.reply("Você precisa fornecer uma pergunta e duas opções para a enquete. Exemplo: `!poll <pergunta> - <opção1> - <opção2>`");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Missing Arguments")
+        .setDescription("You need to provide a question and two options for the poll. Example: `!poll <question> - <option1> - <option2>`");
+      return message.reply({ embeds: [embed] });
     }
 
     const pollData = args.join(" ").split(" - ");
 
     if (pollData.length !== 3) {
-      return message.reply("A sintaxe correta é: `!poll <pergunta> - <opção1> - <opção2>`");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Invalid Syntax")
+        .setDescription("Correct syntax: `!poll <question> - <option1> - <option2>`");
+      return message.reply({ embeds: [embed] });
     }
 
     const question = pollData[0].trim();
@@ -19,12 +27,12 @@ module.exports = {
     const op2 = pollData[2].trim();
 
     const embed = new EmbedBuilder()
-      .setColor(0xD2691E)
-      .setTitle("Enquete")
+      .setColor("#f19962")
+      .setTitle("Poll")
       .setDescription(question)
       .addFields(
-        { name: "Opção 1:", value: `1️⃣ ${op1}`, inline: false },
-        { name: "Opção 2:", value: `2️⃣ ${op2}`, inline: false }
+        { name: "Option 1:", value: `1️⃣ ${op1}`, inline: false },
+        { name: "Option 2:", value: `2️⃣ ${op2}`, inline: false }
       );
 
     const pollMessage = await message.channel.send({ embeds: [embed] });
@@ -48,18 +56,18 @@ module.exports = {
 
       let winner;
       if (countOption1 > countOption2) {
-        winner = `${op1} (${countOption1} votos)`;
+        winner = `${op1} (${countOption1} votes)`;
       } else if (countOption1 < countOption2) {
-        winner = `${op2} (${countOption2} votos)`;
+        winner = `${op2} (${countOption2} votes)`;
       } else {
-        winner = "Empate";
+        winner = "Tie";
       }
 
       const resultEmbed = new EmbedBuilder()
-        .setColor(0xD2691E)
-        .setTitle("Resultado da Enquete")
+        .setColor("#f19962")
+        .setTitle("Poll Result")
         .setDescription(
-          `**Opção 1:** ${op1}\n**Opção 2:** ${op2}\n\n**Vencedor:** ${winner}`
+          `**Option 1:** ${op1}\n**Option 2:** ${op2}\n\n**Winner:** ${winner}`
         );
 
       updatedPollMessage.edit({ embeds: [resultEmbed] }).catch(console.error);

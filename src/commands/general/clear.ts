@@ -1,27 +1,29 @@
 import { Command } from "../../utils/commandLoader";
-import { Role } from "discord.js";
+import { Role, EmbedBuilder } from "discord.js";
 
 const clear: Command = {
   name: "clear",
-  description: "Deleta mensagens do chat. Uso: !clear <quantidade>",
+  description: "Deletes messages from the chat. Usage: !clear <amount>",
   execute: async ({ message, args }) => {
     const requiredRoleName = "admin";
     const memberRoles = message.member?.roles.cache;
 
     if (!memberRoles || !memberRoles.some((role: Role) => role.name === requiredRoleName)) {
-      await message.reply({
-        content: "Você não tem permissão para usar este comando.",
-        ephemeral: true,
-      });
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Permission Denied")
+        .setDescription("You do not have permission to use this command.");
+      await message.reply({ embeds: [embed] });
       return;
     }
 
     const amount = parseInt(args[0], 10);
     if (isNaN(amount) || amount <= 0 || amount > 100) {
-      await message.reply({
-        content: "Informe uma quantidade válida entre 1 e 100. Uso: `!clear <quantidade>`",
-        ephemeral: true,
-      });
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Invalid Amount")
+        .setDescription("Please provide a valid amount between 1 and 100. Usage: `!clear <amount>`");
+      await message.reply({ embeds: [embed] });
       return;
     }
 
@@ -32,18 +34,27 @@ const clear: Command = {
       const deletableMessages = messages.filter(msg => Date.now() - msg.createdTimestamp <= fifteenDaysInMillis);
 
       if (deletableMessages.size === 0) {
-        await message.reply({
-          content: "Nenhuma mensagem pode ser deletada (verifique o limite de 15 dias).",
-          ephemeral: true,
-        });
+        const embed = new EmbedBuilder()
+          .setColor("#f19962")
+          .setTitle("No Messages Deleted")
+          .setDescription("No messages can be deleted (check the 15-day limit)." );
+        await message.reply({ embeds: [embed] });
         return;
       }
 
       await message.channel.bulkDelete(deletableMessages, true);
-      await message.channel.send(`Foram deletadas ${deletableMessages.size} mensagens.`);
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Messages Deleted")
+        .setDescription(`${deletableMessages.size} messages have been deleted.`);
+      await message.channel.send({ embeds: [embed] });
     } catch (error) {
       console.error("Erro ao tentar deletar mensagens:", error);
-      await message.channel.send("Não foi possível deletar as mensagens.");
+      const embed = new EmbedBuilder()
+        .setColor("#f19962")
+        .setTitle("Error")
+        .setDescription("Could not delete the messages.");
+      await message.channel.send({ embeds: [embed] });
     }
   },
 };

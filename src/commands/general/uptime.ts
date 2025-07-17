@@ -1,8 +1,9 @@
 import { Command } from "../../utils/commandLoader";
+import { EmbedBuilder } from "discord.js";
 
 const uptime: Command = {
   name: "uptime",
-  description: "Mostra o tempo de atividade do bot.",
+  description: "Shows the bot's uptime.",
   execute: async ({ message }) => {
     const uptimeInMs = message.client.uptime || 0;
     const uptimeInSec = Math.floor(uptimeInMs / 1000);
@@ -10,7 +11,11 @@ const uptime: Command = {
     const minutes = Math.floor((uptimeInSec % 3600) / 60);
     const seconds = uptimeInSec % 60;
 
-    message.reply(`Estou online por **${hours}h ${minutes}m ${seconds}s**.`);
+    const embed = new EmbedBuilder()
+      .setColor("#f19962")
+      .setTitle("Uptime")
+      .setDescription(`I have been online for **${hours}h ${minutes}m ${seconds}s**.`);
+    await message.reply({ embeds: [embed] });
   },
 };
 
