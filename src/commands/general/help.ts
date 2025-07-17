@@ -3,13 +3,13 @@ import { EmbedBuilder } from "discord.js";
 
 const help: Command = {
   name: "help",
-  description: "Exibe os comandos disponíveis do BeatKeeper.",
+  description: "Exibe os comandos disponíveis do VibeBot.",
   execute: async ({ message }) => {
     const embed = new EmbedBuilder()
       .setColor("#D2691E")
-      .setTitle("Comandos BeatKeeper")
+      .setTitle("Comandos VibeBot")
       .setAuthor({
-        name: "BeatKeeper",
+        name: "VibeBot",
       })
       .setDescription("Aqui está a lista de comandos disponíveis e como usá-los:")
       .addFields([
@@ -21,7 +21,6 @@ const help: Command = {
         { name: "!uptime", value: "Exibe o tempo de atividade do bot.", inline: false },
         { name: "!clear <amount>", value: "Deleta mensagens do chat.", inline: false },
         { name: "!poll <question> - <option1> - <option2>", value: "Inicia uma enquete.", inline: false },
-        { name: "!list", value: "Lista as músicas disponíveis na biblioteca.", inline: false },
         { name: "!play <name or index>", value: "Reproduz uma música e adiciona ela na fila.", inline: false },
         { name: "!pause", value: "Pausa a reprodução da música atual.", inline: false },
         { name: "!resume", value: "Retoma a reprodução da música pausada.", inline: false },
@@ -36,7 +35,7 @@ const help: Command = {
         { name: "!remind <minutes> <message>", value: "Define um lembrete para o usuário.", inline: false },
       ])
       .setFooter({ text: "Made by @devmoreir4" });
-      
+
     await message.reply({ embeds: [embed] });
   },
 };

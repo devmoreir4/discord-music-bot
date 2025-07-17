@@ -1,55 +1,35 @@
 import { Command } from "../../utils/commandLoader";
 import { joinChannel } from "../../utils/musicManager";
-import path from "path";
-import fs from "fs";
-
-const MUSIC_DIR = path.join(__dirname, "../../../musics");
-const ALLOWED_EXTENSIONS = [".mp3", ".webm", ".wav", ".ogg", ".flac", ".aac"];
+import ytdl from "@distube/ytdl-core";
 
 const play: Command = {
   name: "play",
-  description: "Toca uma música da pasta local /musics. Use o nome ou o índice (conforme exibido em !list).",
+  description: "Toca uma música do YouTube. Use: !play <URL do YouTube>",
   execute: async ({ message, args }) => {
     if (!message.member?.voice.channel) {
       return message.reply("Você precisa estar em um canal de voz para usar este comando.");
     }
+
     if (args.length === 0) {
-      return message.reply("Por favor, informe o nome ou o índice da música.");
+      return message.reply("Por favor, informe a URL do YouTube da música que deseja tocar.");
     }
 
-    const files = fs
-      .readdirSync(MUSIC_DIR)
-      .filter(file => ALLOWED_EXTENSIONS.includes(path.extname(file).toLowerCase()));
+    const url = args[0];
 
-    let selectedFile: string | undefined;
-    let title: string;
-
-    const possibleIndex = parseInt(args[0]);
-    if (!isNaN(possibleIndex)) {
-      if (possibleIndex < 1 || possibleIndex > files.length) {
-        return message.reply("Índice inválido. Use o comando !list para ver os índices disponíveis.");
-      }
-      
-      selectedFile = files[possibleIndex - 1];
-      title = path.parse(selectedFile).name;
-    } else {
-      const musicName = args.join(" ").toLowerCase();
-      selectedFile = files.find(file => path.parse(file).name.toLowerCase() === musicName);
-      if (!selectedFile) {
-        return message.reply("Música não encontrada.");
-      }
-      title = musicName;
+    if (!ytdl.validateURL(url)) {
+      return message.reply("Por favor, forneça uma URL válida do YouTube.");
     }
-
-    const filePath = path.join(MUSIC_DIR, selectedFile);
 
     try {
+      const info = await ytdl.getInfo(url);
+      const title = info.videoDetails.title;
+
       const subscription = await joinChannel(message.member);
-      subscription.enqueue({ title, filePath });
-      message.reply(`A música **${title}** foi adicionada à fila!`);
+      subscription.enqueue({ title, url });
+      message.reply(`🎵 **${title}** foi adicionada à fila!`);
     } catch (error) {
-      console.error(error);
-      message.reply("Erro ao conectar ao canal de voz.");
+      console.error("Erro ao processar URL do YouTube:", error);
+      message.reply("Erro ao processar a URL do YouTube. Verifique se o link é válido.");
     }
   },
 };

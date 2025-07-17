@@ -9,10 +9,11 @@ import {
   VoiceConnectionStatus,
 } from "@discordjs/voice";
 import { Collection, GuildMember, Snowflake } from "discord.js";
+import ytdl from "@distube/ytdl-core";
 
 export interface Track {
   title: string;
-  filePath: string;
+  url: string;
 }
 
 export class MusicSubscription {
@@ -20,7 +21,7 @@ export class MusicSubscription {
   public readonly voiceConnection: VoiceConnection;
   public readonly audioPlayer: AudioPlayer = createAudioPlayer();
   public queue: Track[] = [];
-  public volume: number = 1;
+  public volume: number = 0.4;
   private disconnectTimeout: NodeJS.Timeout | null = null;
 
   constructor(voiceConnection: VoiceConnection, guildId: Snowflake) {
@@ -54,7 +55,13 @@ export class MusicSubscription {
 
     if (this.queue.length === 0) return;
     const track = this.queue[0];
-    const resource = createAudioResource(track.filePath, { inlineVolume: true });
+
+    const stream = ytdl(track.url, {
+      filter: 'audioonly',
+      quality: 'highestaudio',
+      highWaterMark: 1 << 25,
+    });
+    const resource = createAudioResource(stream, { inlineVolume: true });
     resource.volume?.setVolume(this.volume);
     this.audioPlayer.play(resource);
   }

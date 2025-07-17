@@ -7,7 +7,7 @@ const skip: Command = {
   execute: async ({ message }) => {
     const guildId = message.guild.id;
     const subscription = subscriptions.get(guildId);
-    if (!subscription) {
+    if (!subscription || subscription.queue.length === 0) {
       return message.reply("Não há música tocando no momento.");
     }
     subscription.skip();

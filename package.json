@@ -1,6 +1,6 @@
 {
-  "name": "discord-music-app",
-  "version": "1.0.1",
+  "name": "discord-music-bot",
+  "version": "1.2.0",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -10,9 +10,11 @@
   "keywords": [],
   "author": "devmoreir4",
   "license": "ISC",
-  "description": "BeatKeeper is a multipurpose discord music app written in TypeScript.",
+  "description": "VibeBot is a multipurpose discord music bot written in TypeScript.",
   "dependencies": {
+    "@discordjs/opus": "^0.10.0",
     "@discordjs/voice": "^0.18.0",
+    "@distube/ytdl-core": "^4.16.12",
     "discord.js": "^14.17.3",
     "dotenv": "^16.4.7",
     "ffmpeg-static": "^5.2.0",
