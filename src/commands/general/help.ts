@@ -21,7 +21,7 @@ const help: Command = {
         { name: "!uptime", value: "Shows the bot's uptime.", inline: false },
         { name: "!clear <amount>", value: "Deletes messages from the chat.", inline: false },
         { name: "!poll <question> - <option1> - <option2>", value: "Starts a poll.", inline: false },
-        { name: "!play <name or index>", value: "Plays a song and adds it to the queue.", inline: false },
+        { name: "!play <YouTube URL>", value: "Plays a song and adds it to the queue.", inline: false },
         { name: "!pause", value: "Pauses the current song.", inline: false },
         { name: "!resume", value: "Resumes the paused song.", inline: false },
         { name: "!skip", value: "Skips to the next song in the queue.", inline: false },

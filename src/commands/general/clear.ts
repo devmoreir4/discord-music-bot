@@ -1,21 +1,14 @@
 import { Command } from "../../utils/commandLoader";
 import { Role, EmbedBuilder } from "discord.js";
+import { checkRolePermission } from "../../utils/permissions";
 
 const clear: Command = {
   name: "clear",
   description: "Deletes messages from the chat. Usage: !clear <amount>",
   execute: async ({ message, args }) => {
     const requiredRoleName = "admin";
-    const memberRoles = message.member?.roles.cache;
-
-    if (!memberRoles || !memberRoles.some((role: Role) => role.name === requiredRoleName)) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Permission Denied")
-        .setDescription("You do not have permission to use this command.");
-      await message.reply({ embeds: [embed] });
-      return;
-    }
+    const hasPermission = await checkRolePermission(message, requiredRoleName);
+    if (!hasPermission) return;
 
     const amount = parseInt(args[0], 10);
     if (isNaN(amount) || amount <= 0 || amount > 100) {

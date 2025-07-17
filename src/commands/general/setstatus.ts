@@ -1,21 +1,14 @@
 import { Command } from "../../utils/commandLoader";
 import { ActivityType, Message, EmbedBuilder } from "discord.js";
+import { checkRolePermission } from "../../utils/permissions";
 
 const setstatus: Command = {
   name: "setstatus",
   description: "Changes the bot's status. Usage: !setstatus <type> <message>",
   execute: async ({ message, args }: { message: Message; args: string[] }) => {
     const requiredRoleName = "admin";
-    const memberRoles = message.member?.roles.cache;
-
-    if (!memberRoles || !memberRoles.some((role) => role.name === requiredRoleName)) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Permission Denied")
-        .setDescription("You do not have permission to use this command.");
-      await message.reply({ embeds: [embed] });
-      return;
-    }
+    const hasPermission = await checkRolePermission(message, requiredRoleName);
+    if (!hasPermission) return;
 
     const validTypes = ["playing", "streaming", "listening", "watching"];
     const type = args[0]?.toLowerCase();

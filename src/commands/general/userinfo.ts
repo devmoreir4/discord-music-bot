@@ -1,21 +1,14 @@
 import { Command } from "../../utils/commandLoader";
 import { EmbedBuilder } from "discord.js";
+import { checkRolePermission } from "../../utils/permissions";
 
 const userinfo: Command = {
   name: "userinfo",
   description: "Shows information about a specific user. Usage: !userinfo @User",
   execute: async ({ message, args }) => {
     const requiredRoleName = "admin";
-    const memberRoles = message.member?.roles.cache;
-
-    if (!memberRoles || !memberRoles.some(role => role.name === requiredRoleName)) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Permission Denied")
-        .setDescription("You do not have permission to use this command.");
-      await message.reply({ embeds: [embed] });
-      return;
-    }
+    const hasPermission = await checkRolePermission(message, requiredRoleName);
+    if (!hasPermission) return;
 
     const userMention = message.mentions.users.first();
 
