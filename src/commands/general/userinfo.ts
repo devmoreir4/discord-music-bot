@@ -13,22 +13,14 @@ const userinfo: Command = {
     const userMention = message.mentions.users.first();
 
     if (!userMention) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Missing User")
-        .setDescription("Please mention a valid user. Usage: `!userinfo @User`");
-      await message.reply({ embeds: [embed] });
+      await message.reply("Please mention a valid user. Usage: `!userinfo @User`");
       return;
     }
 
     const member = message.guild?.members.cache.get(userMention.id);
 
     if (!member) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("User Not Found")
-        .setDescription("Could not find information about this user.");
-      await message.reply({ embeds: [embed] });
+      await message.reply("Could not find information about this user.");
       return;
     }
 

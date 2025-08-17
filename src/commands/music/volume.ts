@@ -1,6 +1,5 @@
 import { Command } from '../../utils/commandLoader';
 import { subscriptions } from '../../utils/musicManager';
-import { EmbedBuilder } from "discord.js";
 
 const volume: Command = {
   name: 'volume',
@@ -9,26 +8,14 @@ const volume: Command = {
     const guildId = message.guild.id;
     const subscription = subscriptions.get(guildId);
     if (!subscription || subscription.queue.length === 0) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("No Music Playing")
-        .setDescription("There is no music playing at the moment.");
-      return message.reply({ embeds: [embed] });
+      return message.reply("There is no music playing at the moment.");
     }
     if (args.length === 0) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Missing Volume")
-        .setDescription("Please provide the volume level (0 to 100).");
-      return message.reply({ embeds: [embed] });
+      return message.reply("Please provide the volume level (0 to 100).");
     }
     const vol = parseInt(args[0]);
     if (isNaN(vol) || vol < 0 || vol > 100) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Invalid Volume")
-        .setDescription("Please provide a valid volume between 0 and 100.");
-      return message.reply({ embeds: [embed] });
+      return message.reply("Please provide a valid volume between 0 and 100.");
     }
 
     const volumeLevel = vol / 100;
@@ -41,11 +28,7 @@ const volume: Command = {
     if (resource && resource.volume) {
       resource.volume.setVolume(volumeLevel);
     }
-    const embed = new EmbedBuilder()
-      .setColor("#f19962")
-      .setTitle("Volume Set")
-      .setDescription(`Volume set to ${vol}%.`);
-    message.reply({ embeds: [embed] });
+    message.reply(`Volume set to ${vol}%.`);
   },
 };
 

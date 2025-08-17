@@ -23,14 +23,14 @@ const clear: Command = {
     try {
       const messages = await message.channel.messages.fetch({ limit: amount });
 
-      const fifteenDaysInMillis = 15 * 24 * 60 * 60 * 1000; // 15 dias em milissegundos
+      const fifteenDaysInMillis = 15 * 24 * 60 * 60 * 1000;
       const deletableMessages = messages.filter(msg => Date.now() - msg.createdTimestamp <= fifteenDaysInMillis);
 
       if (deletableMessages.size === 0) {
         const embed = new EmbedBuilder()
           .setColor("#f19962")
           .setTitle("No Messages Deleted")
-          .setDescription("No messages can be deleted (check the 15-day limit)." );
+          .setDescription("No messages can be deleted (check the 15-day limit).");
         await message.reply({ embeds: [embed] });
         return;
       }

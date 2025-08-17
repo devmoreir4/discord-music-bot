@@ -1,5 +1,4 @@
 import { Command } from "../../utils/commandLoader";
-import { EmbedBuilder } from "discord.js";
 
 const roll: Command = {
   name: "roll",
@@ -8,20 +7,12 @@ const roll: Command = {
     const sides = parseInt(args[0], 10);
 
     if (isNaN(sides) || sides <= 0) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Invalid Sides")
-        .setDescription("Please provide a valid number of sides for the dice. Usage: `!roll <number of sides>`");
-      await message.reply({ embeds: [embed] });
+      await message.reply("Please provide a valid number of sides for the dice. Usage: `!roll <number of sides>`");
       return;
     }
 
     const result = Math.floor(Math.random() * sides) + 1;
-    const embed = new EmbedBuilder()
-      .setColor("#f19962")
-      .setTitle("Dice Roll 🎲")
-      .setDescription(`${message.author} rolled a **${sides}**-sided dice and got **${result}**!`);
-    await message.channel.send({ embeds: [embed] });
+    await message.channel.send(`${message.author} rolled a ${sides}-sided dice and got ${result}!`);
   },
 };
 

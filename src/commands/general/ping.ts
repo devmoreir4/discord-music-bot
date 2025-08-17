@@ -1,16 +1,12 @@
 import { Command } from "../../utils/commandLoader";
 import ms from "ms";
-import { EmbedBuilder } from "discord.js";
 
 const ping: Command = {
   name: "ping",
   description: "Responds with Pong and shows latency information!",
   execute: async ({ message }) => {
-    const initialEmbed = new EmbedBuilder()
-      .setColor("#f19962")
-      .setTitle("Pong!");
-    const initialReply = await message.reply({ embeds: [initialEmbed] });
     const startTimestamp = Date.now();
+    const initialReply = await message.reply("Pong!");
 
     const latency = Date.now() - startTimestamp;
     const apiLatency = Math.round(message.client.ws.ping);
@@ -19,13 +15,7 @@ const ping: Command = {
       { long: true }
     );
 
-    const resultEmbed = new EmbedBuilder()
-      .setColor("#f19962")
-      .setTitle("Pong! 🏓")
-      .setDescription(
-        `- API Latency: **${apiLatency}ms**\n- Last heartbeat: **${lastHeartbeat}** ago\n- Message latency: **${latency}ms**`
-      );
-    await initialReply.edit({ embeds: [resultEmbed] });
+    await initialReply.edit(`Pong! API Latency: ${apiLatency}ms | Last heartbeat: ${lastHeartbeat} ago | Message latency: ${latency}ms`);
   },
 };
 

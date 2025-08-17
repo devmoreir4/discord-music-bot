@@ -1,4 +1,3 @@
-import { EmbedBuilder } from "discord.js";
 import { Command } from "../../utils/commandLoader";
 
 const memberCount: Command = {
@@ -9,17 +8,9 @@ const memberCount: Command = {
 
     if (guild) {
       const { name, memberCount } = guild;
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Member Count")
-        .setDescription(`${name} has **${memberCount}** members!`);
-      await message.reply({ embeds: [embed] });
+      await message.reply(`${name} has ${memberCount} members!`);
     } else {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Error")
-        .setDescription("Could not get the member count for this server.");
-      await message.reply({ embeds: [embed] });
+      await message.reply("Could not get the member count for this server.");
     }
   },
 };

@@ -1,9 +1,10 @@
-const { EmbedBuilder } = require("discord.js");
+import { Command } from "../../utils/commandLoader";
+import { EmbedBuilder } from "discord.js";
 
-module.exports = {
+const poll: Command = {
   name: "poll",
-  description: "Starts a poll.",
-  async execute({ message, args }) {
+  description: "Creates a poll with reactions. Usage: !poll <question> - <option1> - <option2>",
+  execute: async ({ message, args }) => {
     if (args.length < 3) {
       const embed = new EmbedBuilder()
         .setColor("#f19962")
@@ -74,3 +75,5 @@ module.exports = {
     }, 10000); // 10 segs
   },
 };
+
+export = poll;

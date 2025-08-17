@@ -8,29 +8,17 @@ const play: Command = {
   description: "Plays a YouTube song. Usage: !play <YouTube URL>",
   execute: async ({ message, args }) => {
     if (!message.member?.voice.channel) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Voice Channel Required")
-        .setDescription("You need to be in a voice channel to use this command.");
-      return message.reply({ embeds: [embed] });
+      return message.reply("You need to be in a voice channel to use this command.");
     }
 
     if (args.length === 0) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Missing URL")
-        .setDescription("Please provide the YouTube URL of the song you want to play.");
-      return message.reply({ embeds: [embed] });
+      return message.reply("Please provide the YouTube URL of the song you want to play.");
     }
 
     const url = args[0];
 
     if (!ytdl.validateURL(url)) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Invalid URL")
-        .setDescription("Please provide a valid YouTube URL.");
-      return message.reply({ embeds: [embed] });
+      return message.reply("Please provide a valid YouTube URL.");
     }
 
     try {
@@ -46,11 +34,7 @@ const play: Command = {
       message.reply({ embeds: [embed] });
     } catch (error) {
       console.error("Error processing YouTube URL:", error);
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Error")
-        .setDescription("Error processing the YouTube URL. Please check if the link is valid.");
-      message.reply({ embeds: [embed] });
+      message.reply("Error processing the YouTube URL. Please check if the link is valid.");
     }
   },
 };

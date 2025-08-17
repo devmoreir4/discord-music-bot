@@ -18,19 +18,11 @@ const search: Command = {
   description: "Search for music on YouTube. Usage: !search <song name>",
   execute: async ({ message, args }) => {
     if (!message.member?.voice.channel) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Voice Channel Required")
-        .setDescription("You need to be in a voice channel to use this command.");
-      return message.reply({ embeds: [embed] });
+      return message.reply("You need to be in a voice channel to use this command.");
     }
 
     if (args.length === 0) {
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Missing Search Term")
-        .setDescription("Please provide a song name to search for.\nUsage: `!search <song name>`");
-      return message.reply({ embeds: [embed] });
+      return message.reply("Please provide a song name to search for. Usage: `!search <song name>`");
     }
 
     const searchQuery = args.join(" ");
@@ -39,11 +31,7 @@ const search: Command = {
       const searchResults = await yts(searchQuery);
 
       if (!searchResults || !searchResults.videos || searchResults.videos.length === 0) {
-        const embed = new EmbedBuilder()
-          .setColor("#f19962")
-          .setTitle("No Results Found")
-          .setDescription(`No videos found for: **${searchQuery}**`);
-        return message.reply({ embeds: [embed] });
+        return message.reply(`No videos found for: ${searchQuery}`);
       }
 
       const embed = new EmbedBuilder()
@@ -102,13 +90,8 @@ const search: Command = {
 
       collector.on("collect", async (interaction) => {
         if (interaction.customId === "search_cancel") {
-          const cancelEmbed = new EmbedBuilder()
-            .setColor("#f19962")
-            .setTitle("Search Cancelled")
-            .setDescription("Search cancelled by user.");
-
           await interaction.update({
-            embeds: [cancelEmbed],
+            content: "Search cancelled by user.",
             components: []
           });
           return;
@@ -161,13 +144,8 @@ const search: Command = {
 
       collector.on("end", async (collected) => {
         if (collected.size === 0) {
-          const timeoutEmbed = new EmbedBuilder()
-            .setColor("#f19962")
-            .setTitle("Search Timed Out")
-            .setDescription("No selection made within 1 minute. Search cancelled.");
-
           await searchMessage.edit({
-            embeds: [timeoutEmbed],
+            content: "No selection made within 1 minute. Search cancelled.",
             components: []
           });
         }
@@ -175,11 +153,7 @@ const search: Command = {
 
     } catch (error) {
       console.error("Error searching YouTube:", error);
-      const embed = new EmbedBuilder()
-        .setColor("#f19962")
-        .setTitle("Search Error")
-        .setDescription("An error occurred while searching. Please try again later.");
-      message.reply({ embeds: [embed] });
+      message.reply("An error occurred while searching. Please try again later.");
     }
   },
 };
