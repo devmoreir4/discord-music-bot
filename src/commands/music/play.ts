@@ -42,7 +42,7 @@ const play: Command = {
       const embed = new EmbedBuilder()
         .setColor("#f19962")
         .setTitle("Song Added to Queue")
-        .setDescription(`🎵 **${title}** has been added to the queue!`);
+        .setDescription(`**${title}** has been added to the queue!`);
       message.reply({ embeds: [embed] });
     } catch (error) {
       console.error("Error processing YouTube URL:", error);

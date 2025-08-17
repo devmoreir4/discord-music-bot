@@ -18,13 +18,12 @@ const queue: Command = {
 
     const embed = new EmbedBuilder()
       .setColor("#f19962")
-      .setTitle("🎵 Music Queue")
+      .setTitle("Music Queue")
       .setDescription(`**${subscription.queue.length}** song(s) in the queue:`);
 
     const fields = subscription.queue.map((track, index) => {
-      const isPlaying = index === 0 ? "▶️ " : "";
       return {
-        name: `${isPlaying}${index + 1}. ${track.title}`,
+        name: `${index + 1}. ${track.title}`,
         value: `[YouTube](${track.url})`,
         inline: false,
       };
