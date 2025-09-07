@@ -108,6 +108,7 @@ BOT_ACTIVITY_TYPE=Playing       # Activity type (Playing/Listening/Watching/Stre
 MAX_QUEUE_SIZE=30               # Maximum songs in queue
 DEFAULT_VOLUME=0.5              # Default volume (0.0-1.0)
 DISCONNECT_TIMEOUT=30000        # Auto-disconnect timeout (ms)
+ALONE_DISCONNECT_TIMEOUT=5000   # Disconnect when alone timeout (ms)
 NODE_ENV=production             # Environment (development/production)
 ```
 

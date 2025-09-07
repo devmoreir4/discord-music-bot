@@ -7,6 +7,7 @@ import { onMessageCreate } from "./events/messageCreate";
 import { onGuildMemberAdd } from "./events/guildMemberAdd";
 import { onGuildCreate } from "./events/guildCreate";
 import { onGuildDelete } from "./events/guildDelete";
+import { onVoiceStateUpdate } from "./events/voiceStateUpdate";
 
 config.validate();
 
@@ -27,5 +28,6 @@ client.on("messageCreate", (message) => onMessageCreate(message, config.PREFIX, 
 client.on(Events.GuildMemberAdd, onGuildMemberAdd);
 client.on(Events.GuildCreate, onGuildCreate);
 client.on(Events.GuildDelete, onGuildDelete);
+client.on(Events.VoiceStateUpdate, onVoiceStateUpdate);
 
 client.login(config.DISCORD_TOKEN);

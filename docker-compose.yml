@@ -12,6 +12,7 @@ services:
       - MAX_QUEUE_SIZE=${MAX_QUEUE_SIZE:-30}
       - DEFAULT_VOLUME=${DEFAULT_VOLUME:-0.5}
       - DISCONNECT_TIMEOUT=${DISCONNECT_TIMEOUT:-30000}
+      - ALONE_DISCONNECT_TIMEOUT=${ALONE_DISCONNECT_TIMEOUT:-5000}
     volumes:
       - ./src/assets:/app/src/assets
     healthcheck:

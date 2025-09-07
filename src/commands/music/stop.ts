@@ -12,6 +12,7 @@ const stop: Command = {
     }
     subscription.queue = [];
     subscription.skip();
+    subscription.clearDisconnectTimeout();
     message.reply("Music stopped and queue cleared.");
   },
 };

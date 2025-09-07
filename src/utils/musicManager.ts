@@ -89,25 +89,47 @@ export class MusicSubscription {
     this.audioPlayer.stop();
   }
 
-  private scheduleDisconnect() {
+  public scheduleDisconnect(timeout?: number) {
     if (this.disconnectTimeout) return;
 
+    const disconnectTime = timeout || config.DISCONNECT_TIMEOUT;
+
+    logger.debug(`Scheduling disconnect in ${disconnectTime}ms for guild ${this.guildId}`);
+
     this.disconnectTimeout = setTimeout(() => {
-      if (
-        this.audioPlayer.state.status === AudioPlayerStatus.Idle &&
-        this.queue.length === 0
-      ) {
-        this.voiceConnection.destroy();
-        subscriptions.delete(this.guildId);
-      }
-    }, config.DISCONNECT_TIMEOUT);
+      // Always disconnect when timeout is reached, regardless of audio state
+
+      this.audioPlayer.stop();
+
+      this.queue = [];
+
+      this.voiceConnection.destroy();
+
+      subscriptions.delete(this.guildId);
+
+      logger.info(`Bot disconnected from voice channel in guild ${this.guildId} - queue cleared`);
+    }, disconnectTime);
   }
 
-  private clearDisconnectTimeout() {
+  public clearDisconnectTimeout() {
     if (this.disconnectTimeout) {
       clearTimeout(this.disconnectTimeout);
       this.disconnectTimeout = null;
     }
+  }
+
+  public destroy() {
+    this.clearDisconnectTimeout();
+
+    this.audioPlayer.stop();
+
+    this.queue = [];
+
+    this.voiceConnection.destroy();
+
+    subscriptions.delete(this.guildId);
+
+    logger.info(`Music subscription destroyed for guild ${this.guildId}`);
   }
 }
 

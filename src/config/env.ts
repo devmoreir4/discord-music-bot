@@ -9,9 +9,10 @@ export const config = {
   ACTIVITY: process.env.BOT_ACTIVITY || "!help",
   ACTIVITY_TYPE: process.env.BOT_ACTIVITY_TYPE || "Playing",
 
-  MAX_QUEUE_SIZE: parseInt(process.env.MAX_QUEUE_SIZE || "50"),
+  MAX_QUEUE_SIZE: parseInt(process.env.MAX_QUEUE_SIZE || "30"),
   DEFAULT_VOLUME: parseFloat(process.env.DEFAULT_VOLUME || "0.5"),
-  DISCONNECT_TIMEOUT: parseInt(process.env.DISCONNECT_TIMEOUT || "5000"),
+  DISCONNECT_TIMEOUT: parseInt(process.env.DISCONNECT_TIMEOUT || "30000"),
+  ALONE_DISCONNECT_TIMEOUT: parseInt(process.env.ALONE_DISCONNECT_TIMEOUT || "5000"),
 
   NODE_ENV: process.env.NODE_ENV || "development",
 
@@ -26,6 +27,14 @@ export const config = {
 
     if (this.DEFAULT_VOLUME < 0 || this.DEFAULT_VOLUME > 1) {
       throw new Error("DEFAULT_VOLUME must be between 0 and 1");
+    }
+
+    if (this.DISCONNECT_TIMEOUT < 5000 || this.DISCONNECT_TIMEOUT > 600000) {
+      throw new Error("DISCONNECT_TIMEOUT must be between 5000 and 600000 milliseconds");
+    }
+
+    if (this.ALONE_DISCONNECT_TIMEOUT < 5000 || this.ALONE_DISCONNECT_TIMEOUT > 300000) {
+      throw new Error("ALONE_DISCONNECT_TIMEOUT must be between 5000 and 300000 milliseconds");
     }
 
     const validActivityTypes = ["Playing", "Listening", "Watching", "Streaming"];
