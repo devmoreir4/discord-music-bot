@@ -1,8 +1,9 @@
 import { Client } from "discord.js";
 import { initializeBot } from "../config/config";
+import { logger } from "../utils/logger";
 
 export async function onReady(client: Client) {
-  console.log(`🎧 Bot is online as ${client.user?.tag}`);
-  console.log(`🌐 Connected to ${client.guilds.cache.size} servers`);
+  logger.botStart(client.guilds.cache.size);
+  logger.info(`Bot is online as ${client.user?.tag}`);
   await initializeBot(client);
 }

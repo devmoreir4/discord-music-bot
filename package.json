@@ -11,7 +11,7 @@
   },
   "keywords": [],
   "author": "devmoreir4",
-  "license": "ISC",
+  "license": "MIT",
   "description": "A modern Discord bot focused on high-quality music, with a relaxing capybara vibe.",
   "dependencies": {
     "@discordjs/opus": "^0.10.0",

@@ -3,15 +3,7 @@ import { joinChannel } from "../../utils/musicManager";
 import ytdl from "@distube/ytdl-core";
 import { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, ComponentType } from "discord.js";
 import yts from "yt-search";
-
-interface SearchResult {
-    id: string;
-    title: string;
-    url: string;
-    duration: string;
-    views: string;
-    thumbnails: { url: string }[];
-}
+import { logger } from "../../utils/logger";
 
 const search: Command = {
   name: "search",
@@ -134,7 +126,7 @@ const search: Command = {
           });
 
         } catch (error) {
-          console.error("Error adding song to queue:", error);
+          logger.errorWithContext("Error adding song to queue", error as Error);
           await interaction.reply({
             content: "Error adding song to queue. Please try again.",
             ephemeral: true
@@ -152,7 +144,7 @@ const search: Command = {
       });
 
     } catch (error) {
-      console.error("Error searching YouTube:", error);
+      logger.errorWithContext("Error searching YouTube", error as Error);
       message.reply("An error occurred while searching. Please try again later.");
     }
   },

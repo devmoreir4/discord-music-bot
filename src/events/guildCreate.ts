@@ -1,10 +1,11 @@
 import { Guild, EmbedBuilder, TextChannel } from "discord.js";
+import { logger } from "../utils/logger";
 
 export const onGuildCreate = async (guild: Guild) => {
   try {
-    console.log(`Bot joined new server: ${guild.name} (ID: ${guild.id})`);
-    console.log(`Server has ${guild.memberCount} members`);
-    console.log(`Owner: ${guild.ownerId}`);
+    logger.info(`Bot joined new server: ${guild.name} (ID: ${guild.id})`);
+    logger.info(`Server has ${guild.memberCount} members`);
+    logger.info(`Owner: ${guild.ownerId}`);
 
     const systemChannel = guild.systemChannel ||
       guild.channels.cache.find(
@@ -14,11 +15,11 @@ export const onGuildCreate = async (guild: Guild) => {
     if (systemChannel) {
       const welcomeEmbed = new EmbedBuilder()
         .setColor("#f19962")
-        .setTitle("🎉 CapyVibes")
+        .setTitle("CapyVibes Bot")
         .setDescription("Thank you for adding me to your server!")
         .addFields([
           {
-            name: "🎵 Music Features",
+            name: "Music Features",
             value: "Use `!help` to see all available commands and features.",
             inline: false
           }
@@ -30,10 +31,10 @@ export const onGuildCreate = async (guild: Guild) => {
         });
 
       await systemChannel.send({ embeds: [welcomeEmbed] });
-      console.log(`Welcome message sent to ${guild.name}`);
+      logger.info(`Welcome message sent to ${guild.name}`);
     }
 
   } catch (error) {
-    console.error(`Error in guildCreate for ${guild.name}:`, error);
+    logger.errorWithContext(`Error in guildCreate for ${guild.name}`, error as Error);
   }
 };

@@ -19,17 +19,26 @@ const queue: Command = {
     const embed = new EmbedBuilder()
       .setColor("#f19962")
       .setTitle("Music Queue")
-      .setDescription(`**${subscription.queue.length}** song(s) in the queue:`);
+      .setDescription(`**${subscription.queue.length}** song(s) in the queue`)
+      .addFields(
+        { name: "Volume", value: `${Math.round(subscription.volume * 100)}%`, inline: true },
+        { name: "Limit", value: `${subscription.queue.length}/50`, inline: true }
+      );
 
-    const fields = subscription.queue.map((track, index) => {
+    const fields = subscription.queue.slice(0, 10).map((track, index) => {
       return {
-        name: `${index + 1}. ${track.title}`,
+        name: `${index + 1}. ${track.title.length > 50 ? track.title.substring(0, 50) + '...' : track.title}`,
         value: `[YouTube](${track.url})`,
         inline: false,
       };
     });
 
     embed.addFields(fields);
+
+    if (subscription.queue.length > 10) {
+      embed.setFooter({ text: `And ${subscription.queue.length - 10} more song(s)...` });
+    }
+
     await message.reply({ embeds: [embed] });
   },
 };

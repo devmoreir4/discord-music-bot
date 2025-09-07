@@ -1,6 +1,7 @@
 import { Command } from "../../utils/commandLoader";
 import { Role, EmbedBuilder } from "discord.js";
 import { checkRolePermission } from "../../utils/permissions";
+import { logger } from "../../utils/logger";
 
 const clear: Command = {
   name: "clear",
@@ -42,7 +43,7 @@ const clear: Command = {
         .setDescription(`${deletableMessages.size} messages have been deleted.`);
       await message.channel.send({ embeds: [embed] });
     } catch (error) {
-      console.error("Erro ao tentar deletar mensagens:", error);
+      logger.errorWithContext("Error trying to delete messages", error as Error);
       const embed = new EmbedBuilder()
         .setColor("#f19962")
         .setTitle("Error")

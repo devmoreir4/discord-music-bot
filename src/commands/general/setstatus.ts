@@ -1,5 +1,6 @@
 import { Command } from "../../utils/commandLoader";
 import { ActivityType, Message, EmbedBuilder } from "discord.js";
+import { logger } from "../../utils/logger";
 import { checkRolePermission } from "../../utils/permissions";
 
 const setstatus: Command = {
@@ -46,7 +47,7 @@ const setstatus: Command = {
         .setDescription(`Bot status changed to "${statusMessage}" as ${type}.`);
       await message.reply({ embeds: [embed] });
     } catch (error) {
-      console.error("Erro ao alterar o status do bot:", error);
+      logger.errorWithContext("Error changing bot status", error as Error);
       const embed = new EmbedBuilder()
         .setColor("#f19962")
         .setTitle("Error")

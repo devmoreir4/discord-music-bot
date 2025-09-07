@@ -10,6 +10,8 @@ import {
 } from "@discordjs/voice";
 import { Collection, GuildMember, Snowflake } from "discord.js";
 import ytdl from "@distube/ytdl-core";
+import { config } from "../config/env";
+import { logger } from "./logger";
 
 export interface Track {
   title: string;
@@ -21,7 +23,7 @@ export class MusicSubscription {
   public readonly voiceConnection: VoiceConnection;
   public readonly audioPlayer: AudioPlayer = createAudioPlayer();
   public queue: Track[] = [];
-  public volume: number = 0.4;
+  public volume: number = config.DEFAULT_VOLUME;
   private disconnectTimeout: NodeJS.Timeout | null = null;
 
   constructor(voiceConnection: VoiceConnection, guildId: Snowflake) {
@@ -40,7 +42,7 @@ export class MusicSubscription {
     });
 
     this.audioPlayer.on("error", error => {
-      console.error(`Audio error: ${error.message}`);
+      logger.errorWithContext(`Audio error in guild ${guildId}`, error);
       this.queue.shift();
       if (this.queue.length > 0) {
         this.playNext();
@@ -66,12 +68,21 @@ export class MusicSubscription {
     this.audioPlayer.play(resource);
   }
 
-  public enqueue(track: Track) {
+  public enqueue(track: Track): boolean {
     this.clearDisconnectTimeout();
+
+    if (this.queue.length >= config.MAX_QUEUE_SIZE) {
+      logger.warn(`Queue full in guild ${this.guildId}, cannot add: ${track.title}`);
+      return false;
+    }
+
     this.queue.push(track);
+    logger.musicEvent('Track enqueued', `${track.title} (Queue: ${this.queue.length}/${config.MAX_QUEUE_SIZE})`);
+
     if (this.audioPlayer.state.status === AudioPlayerStatus.Idle) {
       this.playNext();
     }
+    return true;
   }
 
   public skip() {
@@ -89,7 +100,7 @@ export class MusicSubscription {
         this.voiceConnection.destroy();
         subscriptions.delete(this.guildId);
       }
-    }, 5000);
+    }, config.DISCONNECT_TIMEOUT);
   }
 
   private clearDisconnectTimeout() {

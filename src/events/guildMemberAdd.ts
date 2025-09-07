@@ -1,4 +1,5 @@
 import { GuildMember, EmbedBuilder, TextChannel } from "discord.js";
+import { logger } from "../utils/logger";
 
 export const onGuildMemberAdd = async (member: GuildMember) => {
   try {
@@ -7,7 +8,7 @@ export const onGuildMemberAdd = async (member: GuildMember) => {
     ) as TextChannel;
 
     if (!welcomeChannel) {
-      console.log("No text channel found for welcome message.");
+      logger.warn("No text channel found for welcome message.");
       return;
     }
 
@@ -17,18 +18,13 @@ export const onGuildMemberAdd = async (member: GuildMember) => {
       .setDescription(`**${member.user.displayName}** just joined the server!`)
       .addFields([
         {
-          name: "👋 Welcome!",
+          name: "Welcome!",
           value: `We're glad to have you here, ${member.user}!`,
           inline: false
         },
         {
-          name: "🎵 Music Features",
+          name: "Music Features",
           value: "Use `!help` to see all available commands and features.",
-          inline: false
-        },
-        {
-          name: "📱 Member Count",
-          value: `You are member #${member.guild.memberCount}`,
           inline: false
         }
       ])
@@ -41,9 +37,9 @@ export const onGuildMemberAdd = async (member: GuildMember) => {
 
     await welcomeChannel.send({ embeds: [welcomeEmbed] });
 
-    console.log(`Welcome message sent for ${member.user.tag} in ${member.guild.name}`);
+    logger.info(`Welcome message sent for ${member.user.tag} in ${member.guild.name}`);
 
   } catch (error) {
-    console.error("Error sending welcome message:", error);
+    logger.errorWithContext("Error sending welcome message", error as Error);
   }
 };

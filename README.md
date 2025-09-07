@@ -7,120 +7,127 @@
 <p align="center">
   <a href="#features">Features</a> •
   <a href="#getting-started">Getting Started</a> •
+  <a href="#commands">Commands</a> •
   <a href="#license">License</a>
 </p>
 
 <p align="center">
-  <i align="center">A modern Discord bot focused on high-quality music, with a relaxing capybara vibe.</i>
+  <img src="https://img.shields.io/badge/Node.js-22.10.2+-green?style=flat-square&logo=node.js" alt="Node.js">
+  <img src="https://img.shields.io/badge/Discord.js-14.17.3+-blue?style=flat-square&logo=discord" alt="Discord.js">
+  <img src="https://img.shields.io/badge/TypeScript-5.7.2+-blue?style=flat-square&logo=typescript" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Docker%20Compose-2.38%2B-blue?style=flat-square&logo=docker" alt="Docker Compose">
+  <img src="https://img.shields.io/badge/FFmpeg-5.2.0%2B-red?style=flat-square&logo=ffmpeg" alt="FFmpeg">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License">
 </p>
 
-<p align="center">
-  <a href="https://nodejs.org/">
-    <img src="https://img.shields.io/badge/Node.js-22.10.2+-green?style=flat-square&logo=node.js" alt="Node.js">
-  </a>
-  <a href="https://discord.js.org/">
-    <img src="https://img.shields.io/badge/Discord.js-14.17.3+-blue?style=flat-square&logo=discord" alt="Discord.js">
-  </a>
-  <a href="https://www.typescriptlang.org/">
-    <img src="https://img.shields.io/badge/TypeScript-5.7.2+-blue?style=flat-square&logo=typescript" alt="TypeScript">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-yellow?style=flat-square" alt="License">
-  </a>
-</p>
+<h2 id="features">Features</h2>
+
+- **YouTube Music Playback**: Play music directly from YouTube.
+- **Smart Search**: Find songs by name with interactive search results.
+- **Queue Management**: Add, view, remove, and manage songs in the queue.
+- **Playback Controls**: Play, pause, resume, skip, stop, and adjust volume.
+- **Interactive Commands**: Interactive and informative commands.
+- **Real-time Updates**: Live queue display and now playing information.
+- **Easy Setup**: Easy deployment with Docker.
+- **Logging System**: Smart logs based on environment.
+
+<h2 id="getting-started">Getting Started</h2>
+
+### Prerequisites
+- Docker and Docker Compose
+- [Discord Bot Token](https://discord.com/developers/applications)
+
+### 1. Clone Repository
+```bash
+git clone https://github.com/devmoreir4/discord-music-bot.git
+cd discord-music-bot
+```
+
+### 2. Configure Environment
+Create a `.env` file:
+```env
+DISCORD_TOKEN=your_bot_token
+```
+
+### 3. Run with Docker
+```bash
+# Start the bot
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the bot
+docker-compose down
+```
+
+### 4. Invite Bot to Server
+1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
+2. Select your bot → OAuth2 → URL Generator
+3. Select scopes: `bot`
+4. Select permissions: `Send Messages`, `Connect`, `Speak`, `Use Voice Activity`
+5. Copy URL and invite bot to your server
 
 
-<h2 id="features">✨ Features</h2>
-<ul>
-  <li><strong>YouTube Music Playback:</strong> Play music directly from YouTube links or search by song name.</li>
-  <li><strong>Queue Management:</strong> Add, view, remove, and manage songs in the queue.</li>
-  <li><strong>Playback Controls:</strong> Play, pause, resume, skip, stop, and adjust volume.</li>
-  <li><strong>Utility Commands:</strong> Polls, dice roll, reminders, user info, and more.</li>
-  <li><strong>Easy Setup:</strong> Quick to deploy and configure.</li>
-</ul>
+<h2 id="commands">Commands</h2>
+
+### Music Commands
+- **`!play <url>`** - Play a YouTube video
+- **`!search <query>`** - Search for music on YouTube
+- **`!pause`** - Pause the current song
+- **`!resume`** - Resume the paused song
+- **`!skip`** - Skip to the next song in queue
+- **`!stop`** - Stop playback and clear the queue
+- **`!queue`** - Show the current music queue
+- **`!volume <0-100>`** - Set the playback volume
+- **`!nowplaying`** - Show information about the current song
+
+### Utility Commands
+- **`!help`** - Display all available commands
+- **`!ping`** - Check the bot's response time
+- **`!userinfo [@user]`** - Get detailed information about a user
+- **`!membercount`** - Show the server's member count
+- **`!uptime`** - Display the bot's uptime
+- **`!roll <sides>`** - Roll a dice with specified number of sides
+- **`!remind <minutes> <message>`** - Set a personal reminder
+- **`!clear <amount>`** - Delete messages from the channel (Admin)
+- **`!setstatus <type> <message>`** - Change the bot's activity status (Admin)
 
 
-<h2>📦 Requirements</h2>
-<ul>
-  <li><a href="https://nodejs.org/">Node.js</a> v22.10.2 or higher.</li>
-  <li>
-    <a href="https://ffmpeg.org/">FFmpeg</a> (for audio processing).
-    <ul>
-      <li>Install globally or use the <a href="https://www.npmjs.com/package/ffmpeg-static">ffmpeg-static</a> package.</li>
-    </ul>
-  </li>
-</ul>
+## Configuration
 
+### Environment Variables
+```env
+# Required
+DISCORD_TOKEN=your_bot_token
 
-<h2 id="getting-started">🚀 Getting Started</h2>
+# Optional
+BOT_PREFIX=!                    # Command prefix
+BOT_ACTIVITY=!help              # Bot activity text
+BOT_ACTIVITY_TYPE=Playing       # Activity type (Playing/Listening/Watching/Streaming)
+MAX_QUEUE_SIZE=30               # Maximum songs in queue
+DEFAULT_VOLUME=0.5              # Default volume (0.0-1.0)
+DISCONNECT_TIMEOUT=30000        # Auto-disconnect timeout (ms)
+NODE_ENV=production             # Environment (development/production)
+```
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/devmoreir4/discord-music-bot.git
-    cd discord-music-bot
-    ```
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-3.  **Configure environment variables:**
-    -   Copy `.env.example` to `.env` and add your Discord bot token:
-        ```env
-        DISCORD_TOKEN=your_discord_token_here
-        ```
-    -   Get your token from the [Discord Developer Portal](https://discord.com/developers/applications).
-4.  **Invite the bot to your server:**
-    -   In the Developer Portal, go to Installation.
-    -   Copy and open the generated URL to invite the bot.
-5.  **Run the bot:**
-    -   For development (with auto-reload):
-        ```bash
-        npm run dev:watch
-        ```
-    -   For development (manual):
-        ```bash
-        npm run dev
-        ```
-    -   For production:
-        ```bash
-        npm run build
-        npm start
-        ```
+## Development
 
+### Local Development
+```bash
+# Install dependencies
+npm install
 
-<h2>🎧 Usage & Commands</h2>
-<h3>Music</h3>
+# Run in development mode
+npm run dev
 
-| Command | Function |
-| :--- | :--- |
-| **`!play`** | Plays a song from a YouTube URL. |
-| **`!search`** | Search for music on YouTube by name and choose from results. |
-| **`!pause`** | Pauses the currently playing track. |
-| **`!resume`**| Resumes playback if the music is paused. |
-| **`!skip`** | Skips the current song and immediately starts the next one in the queue. |
-| **`!stop`** | Stops the music completely and clears the entire song queue. |
-| **`!queue`** | Displays the current list of songs waiting to be played. |
-| **`!remove`**| Removes a specific song from the queue by its index number. |
-| **`!volume`**| Adjusts the playback volume from 0 to 100. |
-| **`!nowplaying`**| Shows information about the currently playing song. |
+# Run with auto-reload
+npm run dev:watch
 
-<h3>Utility Commands</h3>
+# Build for production
+npm run build
+```
 
-| Command | Function |
-| :--- | :--- |
-| **`!help`** | Displays a helpful message with all available commands. |
-| **`!ping`** | Checks the bot's response time to see if it's running smoothly. |
-| **`!avatar`**| Shows a larger version of a user's profile picture. |
-| **`!userinfo`**| Provides detailed information about a server member. |
-| **`!membercount`**| Shows the total number of members currently in the server. |
-| **`!roll`** | Rolls a virtual dice with a specified number of sides. |
-| **`!poll`** | Starts a simple poll with one question and two options. |
-| **`!remind`**| Sets a personal reminder. The bot will DM you a message after the set time. |
-| **`!clear`** | *(Admin Only)* Deletes a specified number of recent messages from a channel. |
-| **`!setstatus`**| *(Admin Only)* Changes the bot's status message. |
-| **`!uptime`** | Shows how long the bot has been online without interruption. |
+<h2 id="license">License</h2>
 
-
-<h2 id="license">📄 License</h2>
-
-This project is licensed under the [MIT License](LICENSE). Contributions are welcome!
+This project is licensed under the [MIT License](LICENSE).

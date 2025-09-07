@@ -1,0 +1,22 @@
+services:
+  bot:
+    build: .
+    container_name: discord-bot
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=${NODE_ENV:-production}
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - BOT_PREFIX=${BOT_PREFIX:-!}
+      - BOT_ACTIVITY=${BOT_ACTIVITY:-!help}
+      - BOT_ACTIVITY_TYPE=${BOT_ACTIVITY_TYPE:-Playing}
+      - MAX_QUEUE_SIZE=${MAX_QUEUE_SIZE:-30}
+      - DEFAULT_VOLUME=${DEFAULT_VOLUME:-0.5}
+      - DISCONNECT_TIMEOUT=${DISCONNECT_TIMEOUT:-30000}
+    volumes:
+      - ./src/assets:/app/src/assets
+    healthcheck:
+      test: ["CMD", "node", "-e", "console.log('Bot is running')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
